@@ -57,7 +57,7 @@ Priority order for consistency:
 - One line for single property, multiple lines for several properties
 - All property values in single quotes
 - Names use concise meaningful words, exclude function words: `CustomerBirthDate` not `CustomerDateOfBirth`
-- Time elements must have `DataType = 'DateTime'` and `DateFormat = 'None'`: `FlightDelayTime [ DataType = 'DateTime', DateFormat = 'None' ]`
+- Time elements must have `DataType = 'DateTime'` and `DateFormat = 'None'`; e.g. `FlightDelayTime [ DataType = 'DateTime', DateFormat = 'None' ]`
 - Value ranges use `ValueRange` property:
 	* Use `:` for intervals: `1:5` (1 to 5), `1:` (1+), `:5` (≤5)
 	* Use ` ` for entries: `1 3 5` (only 1,3,5), `"Yes" "No"` (only Yes,No)
