@@ -168,7 +168,7 @@ Sends an email message
 Syntax: `<smtpsession>.Send(<message>)`
 
 Where:
-- `<message>`: `MailMessage` instance to send
+- `<message>`: Instance of `MailMessage` to send
 
 Constraints:
 - Returns status code; 0 indicates success

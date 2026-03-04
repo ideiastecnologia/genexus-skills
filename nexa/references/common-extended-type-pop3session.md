@@ -172,7 +172,7 @@ Receives a message identified by UID
 Syntax: `<pop3session>.Receive(<message>)`
 
 Where:
-- `<message>`: `MailMessage` instance to populate with received email
+- `<message>`: Instance of `MailMessage` to populate with received email
 
 Constraints:
 - Returns status code; 0 indicates success
