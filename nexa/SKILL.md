@@ -215,6 +215,11 @@ Quick reference for appropriate use of each object type
 - Use when: Centralizing web routes, supporting readable URLs, and resolving parameterized paths
 - Reference: [URLRewrite object](references/object-url-rewrite.md)
 
+## ExternalObject (EO)
+- Purpose: Integration wrapper exposing external libraries/services to GeneXus through methods, properties, events, and types
+- Use when: Calling platform APIs, SDKs, native utilities, or external contracts not implemented as GeneXus objects
+- Reference: [ExternalObject object](references/object-external-object.md)
+
 ---
 
 # BEST PRACTICES
