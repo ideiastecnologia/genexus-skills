@@ -8,7 +8,7 @@ Defines canonical invocation patterns for `Agent` object execution from procedur
 ---
 
 # CALL MODE
-Synchronous request-response invocation.
+Synchronous request-response invocation
 
 Syntax:
 ~~~
@@ -30,7 +30,7 @@ Where:
 ---
 
 # CHAT MODE
-Conversational invocation with context history.
+Conversational invocation with context history
 
 Syntax:
 ~~~

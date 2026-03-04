@@ -8,9 +8,9 @@ Defines a `URL Rewrite` object to map friendly URLs to web object invocations
 ---
 
 # DEFINITION
-A `URL Rewrite` object maps user-friendly URL patterns to target web object calls.
+A `URL Rewrite` object maps user-friendly URL patterns to target web object calls
 
-It centralizes route definitions and parameter extraction for web navigation.
+It centralizes route definitions and parameter extraction for web navigation
 
 ---
 

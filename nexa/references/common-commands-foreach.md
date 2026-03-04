@@ -481,7 +481,7 @@ EndFor
 ---
 
 # CONTROL BREAK (NESTED FOR EACH)
-Use nested `For each` to implement hierarchical control breaks (group headers, subgroup headers, and detail rows).
+Use nested `For each` to implement hierarchical control breaks (group headers, subgroup headers, and detail rows)
 
 Guidelines:
 - Use `N + 1` nested `For each` commands for `N` control breaks

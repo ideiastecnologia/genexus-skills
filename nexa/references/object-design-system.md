@@ -47,7 +47,7 @@ Note:
 ---
 
 # TOKENS
-Defines reusable design variables (similar to CSS custom properties) grouped by category and optionally scoped by argument value.
+Defines reusable design variables (similar to CSS custom properties) grouped by category and optionally scoped by argument value
 
 Definition syntax:
 ~~~
@@ -96,7 +96,7 @@ Notes:
 ---
 
 # STYLES
-Defines style classes/selectors, font-face declarations, and inheritance/composition rules.
+Defines style classes/selectors, font-face declarations, and inheritance/composition rules
 
 Syntax:
 ~~~
