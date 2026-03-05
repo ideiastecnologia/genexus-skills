@@ -222,7 +222,7 @@ Panel CustomerList
 	#End
 
 	#Properties
-		"Captiin" = "Products List"
+		"Caption" = "Products List"
 		"Style" = "MyDesignSystem"
 	#End
 }
