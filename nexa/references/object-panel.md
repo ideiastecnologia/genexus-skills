@@ -181,6 +181,10 @@ Panel CustomerList
 		Event GridCustomers.ItemClick
 			ViewCustomer(&Customer.CustomerId)
 		EndEvent
+
+		Event 'NewCustomer'
+			NewCustomer()
+		EndEvent
 	#End
 
 	#Rules
@@ -197,23 +201,28 @@ Panel CustomerList
 	#Layout
 		<layout>
 			<view>
-				<smart name="MainTable" width="100%" height="100%" columnsStyle="100%" rowsStyle="60dip;100%">
+				<smart name="MainTable" class="page" width="100%" height="100%" columnsStyle="100%" rowsStyle="96dip;100%;72dip">
 					<row>
-						<cell hAlign="Center" vAlign="Middle">
-							<label name="Title" caption="Customers" class="screen-title" />
+						<cell class="page-header" hAlign="Left" vAlign="Middle">
+							<label name="Title" caption="Customers" class="text-title" />
 						</cell>
 					</row>
 					<row>
-						<cell>
-							<grid name="GridCustomers" controlType="smart" autoGrow="True">
-								<smart name="GridCustomerItem" width="100%" height="80dip">
+						<cell class="page-content">
+							<grid name="GridCustomers" class="surface" controlType="smart" autoGrow="True">
+								<smart name="GridCustomerItem" width="100%" height="88dip" class="surface-muted">
 									<row>
 										<cell>
-											<input attribute="&amp;Customer.CustomerName" readonly="True" />
+											<input attribute="&amp;Customer.CustomerName" readonly="True" class="text-body" />
 										</cell>
 									</row>
 								</smart>
 							</grid>
+						</cell>
+					</row>
+					<row>
+						<cell class="page-footer" hAlign="Right" vAlign="Middle">
+							<button name="BtnNew" caption="New Customer" event="'NewCustomer'" class="btn-primary" />
 						</cell>
 					</row>
 				</smart>
@@ -279,17 +288,17 @@ Panel ProductDetail
 					</row>
 					<row>
 						<cell>
-							<input attribute="&amp;ProductName" readonly="True" class="product-name" />
+							<input attribute="&amp;ProductName" readonly="True" class="text-title" />
 						</cell>
 					</row>
 					<row>
 						<cell>
-							<input attribute="&amp;ProductPrice" readonly="True" class="product-price" />
+							<input attribute="&amp;ProductPrice" readonly="True" class="text-body" />
 						</cell>
 					</row>
 					<row>
 						<cell hAlign="Center" vAlign="Middle">
-							<button name="BtnBuy" caption="Buy Now" event="'BuyNow'" class="action-button" />
+							<button name="BtnBuy" caption="Buy Now" event="'BuyNow'" class="btn-primary" />
 						</cell>
 					</row>
 				</smart>
