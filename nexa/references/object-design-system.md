@@ -100,7 +100,7 @@ Defines style classes/selectors, font-face declarations, and inheritance/composi
 
 Syntax:
 ~~~
-@include <object-name>;
+@import <object-name>;
 … // other includes
 
 @font-face
@@ -115,7 +115,7 @@ Syntax:
 
 	<style-name>
 	{
-		@include: <class-name-1>[, <class-name-2>[, …]];
+		@include <class-name-1>[, <class-name-2>[, …]];
 		<prop-name>: <prop-value>;
 		… // other properties
 	}
@@ -184,23 +184,22 @@ Tokens MyDesignSystem(color-scheme:[light]|dark)
 {
 	#colors // applies globally
 	{
-		primary-color: #696ef2;
-	}
-
-	#fontSizes
-	{
-		h1: 18px;
-		h2: 16px;
-		h3: 14px;
-		normal: 12px;
+		brand-primary: #1c6ef2;
+		brand-primary-strong: #0d4fba;
+		state-success: #0f8a5f;
+		state-error: #c23030;
 	}
 
 	@color-scheme = light // applies only on light-mode
 	{
 		#colors
 		{
-			accent-color: #f3f6fd;
-			text-color: #3d4854;
+			page-bg: #eef3f9;
+			surface-1: #ffffff;
+			surface-2: #f6f8fb;
+			text-primary: #1b2430;
+			text-secondary: #526173;
+			border-default: #d9e1ea;
 		}
 	}
 
@@ -208,15 +207,56 @@ Tokens MyDesignSystem(color-scheme:[light]|dark)
 	{
 		#colors
 		{
-			accent-color: #242426;
-			text-color: #ffffff;
+			page-bg: #10151d;
+			surface-1: #16202c;
+			surface-2: #1c2836;
+			text-primary: #f4f7fb;
+			text-secondary: #b8c3d3;
+			border-default: #2b3c50;
 		}
+	}
+
+	#spacing
+	{
+		xxs: 4px;
+		xs: 8px;
+		sm: 12px;
+		md: 16px;
+		lg: 24px;
+		xl: 32px;
+	}
+
+	#fontSizes
+	{
+		title: 24px;
+		subtitle: 18px;
+		body: 14px;
+		caption: 12px;
+	}
+
+	#radius
+	{
+		sm: 6px;
+		md: 10px;
+		lg: 16px;
+	}
+
+	#shadows
+	{
+		low: 0 2px 8px rgba(18, 32, 56, 0.08);
+		medium: 0 8px 24px rgba(18, 32, 56, 0.14);
+	}
+
+	#times
+	{
+		fast: 120ms;
+		normal: 220ms;
 	}
 }
 
 Styles MyDesignSystem
 {
-	@include MyModule.MyBaseDesignSystem;
+	@import MyModule.MyBaseDesignSystem;
 
 	@font-face
 	{
@@ -226,41 +266,76 @@ Styles MyDesignSystem
 
 	#region Buttons
 
-		.my-button
+		.btn-primary
 		{
 			font-family: MyFont-Bold;
-			font-size: $fontSizes.normal;
-			text-color: $colors.text-color;
-			border-color: $colors.accent-color;
-			border-width: 2px;
-			background: gx-image(MyModule.MyImage); // image objects name in the Knowledge Base
+			font-size: $fontSizes.body;
+			text-color: #ffffff;
+			background-color: $colors.brand-primary;
+			border-color: $colors.brand-primary;
+			border-width: 1px;
+			border-radius: $radius.md;
+			padding: $spacing.sm $spacing.lg;
+			transition: 
+				background-color $times.fast ease, 
+				box-shadow $times.normal ease;
 		}
 
-		.action-button
+		.btn-primary:hover
 		{
-			@include: .my-button;
+			background-color: $colors.brand-primary-strong;
+		}
+
+		.btn-primary:focus-visible
+		{
+			box-shadow: 0 0 0 3px rgba(28, 110, 242, 0.32);
+		}
+
+		.btn-secondary
+		{
+			@include btn-primary;
+			text-color: $colors.brand-primary;
+			background-color: transparent;
+			border-color: $colors.border-default;
 		}
 
 	#endregion
 
-	#region Inputs
+	#region LayoutAndTypography
 
-		.screen-title
+		.page
 		{
-			font-size: $fontSizes.h2;
-			text-color: $colors.text-color;
+			background-color: $colors.page-bg;
+			padding: $spacing.lg;
 		}
 
-		.product-name
+		.surface
 		{
-			font-size: $fontSizes.h2;
-			text-color: $colors.text-color;
+			background-color: $colors.surface-1;
+			border-color: $colors.border-default;
+			border-width: 1px;
+			border-radius: $radius.lg;
+			box-shadow: $shadows.low;
+			padding: $spacing.md;
 		}
 
-		.product-price
+		.surface-muted
 		{
-			font-size: $fontSizes.normal;
-			text-color: $colors.text-color;
+			background-color: $colors.surface-2;
+			border-radius: $radius.md;
+			padding: $spacing.md;
+		}
+
+		.text-title
+		{
+			font-size: $fontSizes.title;
+			text-color: $colors.text-primary;
+		}
+
+		.text-body
+		{
+			font-size: $fontSizes.body;
+			text-color: $colors.text-secondary;
 		}
 
 	#endregion
