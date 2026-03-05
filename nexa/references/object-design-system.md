@@ -34,8 +34,8 @@ Documentation <name>
 
 Where:
 - `<name>`: Object name (alphanumeric or `_`, must start with a letter)
-- `<tokens>`: Object tokens (see TOKENS for syntax and usage)
-- `<styles>`: Object styles (see STYLES for syntax and usage)
+- `<tokens>`: Object tokens (see [TOKENS](#tokens))
+- `<styles>`: Object styles (see [STYLES](#styles))
 - `<arguments>`: Optional token arguments; syntax `<arg>:[<default>]|<value-1>|<value-2>|…`
 - `<properties>`: Optional object properties in TOML syntax
 - `<documentation>`: Optional object documentation (check [common-markdown](./common-markdown.md))

@@ -16,7 +16,7 @@ Where:
 - `<rule-name>`: Predefined rule keyword
 - `<arguments>`: Rule-specific parameters
 - `<condition>`: Optional condition expression (may reference attributes, variables, other object calls, and operators)
-- `<trigger>`: Optional execution point (see TRIGGERS)
+- `<trigger>`: Optional execution point (see [TRIGGERS](#triggers))
 
 Notes:
 - Rules are evaluated declaratively, meaning their position in the code does not necessarily define the execution order

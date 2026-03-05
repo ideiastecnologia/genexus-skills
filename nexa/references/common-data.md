@@ -21,7 +21,7 @@ Data elements including `Attributes` (stored), `Variables` (in-memory), and `Mem
 Where:
 - `<name>`: Alphanumeric or underscore, starting with letter
 - `<description>`: Purpose of element (optional but recommended)
-- `<type>`: Mandatory data type definition (see DATA TYPE PRIORITY)
+- `<type>`: Mandatory data type definition (see [DATA TYPE PRIORITY](#data-type-priority))
 
 ---
 
@@ -42,7 +42,7 @@ Priority order for consistency:
 3. `BusinessComponent reference`: When matching known transaction (TRN) defined as Business Component
 	* Syntax: `<trn-name>[, <module>]`
 	* Example: `Customer [ DataType = 'Customer, Entities' ]`
-5. `Built-in type`: When none above apply (see `common-data-types.md`)
+5. `Built-in type`: When none above use [common-data-types](./common-data-types.md)
 	* Syntax: `<type-definition>`
 	* Example: `Amount [ DataType = 'Numeric(4.0)' ]`
 

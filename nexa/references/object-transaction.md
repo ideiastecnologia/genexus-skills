@@ -46,10 +46,10 @@ Transaction <name>
 
 Where:
 - `<name>`: Transaction name using alphanumeric or underscore, starting with letter
-- `<attributes>`: Entity attributes (mandatory `DataType`, prefixed by Transaction or sublevel; see ATTRIBUTE/VARIABLE)
-- `<rules>`: Business rules governing Transaction behavior (see RULES)
-- `<events>`: Transaction lifecycle event handlers (see EVENTS)
-- `<variables>`: Variables (mandatory `DataType`; see ATTRIBUTE/VARIABLE)
+- `<attributes>`: Entity attributes (mandatory `DataType`; see [ATTRIBUTE/VARIABLE](#attributevariable))
+- `<rules>`: Business rules governing Transaction behavior (see [RULES](#rules))
+- `<events>`: Transaction lifecycle event handlers (see [EVENTS](#events))
+- `<variables>`: Variables (mandatory `DataType`; see [ATTRIBUTE/VARIABLE](#attributevariable))
 - `<properties>`: Optional object properties in TOML syntax
 - `<documentation>`: Optional object documentation (check [common-markdown](./common-markdown.md))
 
@@ -171,6 +171,11 @@ Constraints:
 
 ---
 
+# RULES
+see [common-rules](./common-rules.md)
+
+---
+
 # EVENTS
 See [common-events](./common-events.md)
 
@@ -195,6 +200,7 @@ EndEvent
 - Use [global-constraints](./global-constraints.md)
 - Check Transaction existence before updating
 - Every attribute must have `DataType` property or empty brackets `[]`
+- Every attribute must be prefixed by Transaction or sublevel name
 - Primary key required (at least one attribute with `*`)
 - Only one description attribute (`!`) allowed
 - Surrogate PK when no natural identifier exists
