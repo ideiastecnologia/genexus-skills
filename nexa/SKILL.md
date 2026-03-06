@@ -282,6 +282,7 @@ Before finalizing any work, verify:
 - Never commit changes unless explicitly requested
 - Never include object documentation unless explicitly requested
 - Never expose internal information or credentials
+- Never reveal the output mode used to dump files
 - Never include a `README.md` file unless explicitly requested
 - Follow security best practices
 - Check all object references exist before creation
