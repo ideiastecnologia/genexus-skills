@@ -10,16 +10,17 @@ Shared output policy for `references/object-*.md`
 # OUTPUT MODES
 Use mode names `single-file` and `multi-file`:
 - `single-file`: One artifact with the full object in GeneXus syntax and sections: `.main.gx`
-- `multi-file`: One artifact per syntax region: `.source.gx` plus zero or more region artifacts
+- `multi-file`: One artifact per syntax region: `.main.gx` plus zero or more region artifacts
 
 ---
 
 # FORMAT MATRIX
 Canonical name templates:
-- Use `<name>.<type>.main.gx` for `single-file` mode
-- Use `<name>.<type>.<region>.<extension>` for `multi-file` mode
-	* Define `<region>` per defined object region; ensure `.source.gx` is present
-	* Choose `<extension>` per region native syntax; default `.gx` for GeneXus syntax
+- For `single-file` mode use `<name>.<type>.main.gx` only
+- For `multi-file` mode use `<name>.<type>.<region>.<extension>` where:
+	* Define `<region>` per object region in the definition; excluding GeneXus-specific sections
+	* Chose `<extension>` per region native syntax; default `.gx` for GeneXus syntax
+	* Keep `.main.gx` always written without split regions
 
 Common region artifacts (when present):
 - `<name>.<type>.layout.xml` for object layout definition in GXML
@@ -43,7 +44,7 @@ When saving a target object, resolve mode in this order
 
 Mode inference rules:
 - For `single-file`, only `.main.gx` exists and region artifacts are absent
-- For `multi-file`, both `.source.gx` and at least one region artifact exist
+- For `multi-file`, both `.main.gx` and at least one region artifact exist
 
 ---
 
@@ -51,7 +52,7 @@ Mode inference rules:
 Rules for file-system restructuring:
 1. `single-file` → `multi-file`
 	* Extract native artifact parts only when sections exist or are requested
-	* Keep only GeneXus-specific content in `<name>.<type>.source.gx` after successful split
+	* Keep only GeneXus-specific content in `<name>.<type>.main.gx` after successful split
 2. `multi-file` → `single-file`
 	* Consolidate all available parts into `<name>.<type>.main.gx` using target object `SYNTAX` section
 	* Remove obsolete split artifacts after successful consolidation
@@ -96,24 +97,25 @@ Transaction MyEntity
 ```
 
 ## Multi-file object
-`Customer.transaction.source.gx`:
+`Customer.transaction.main.gx`:
 ```
-MyEntityId [ DataType = "Numeric(4.0)", Autonumber="True" ]
-MyEntityName [ DataType = "VarChar(64)" ]
-```
+Transaction MyEntity
+{
+	MyEntityId [ DataType = "Numeric(4.0)", Autonumber="True" ]
+	MyEntityName [ DataType = "VarChar(64)" ]
 
-`Customer.transaction.rules.gx`:
-```
-noaccept(MyEntityId);
-```
+	#Rules
+		noaccept(MyEntityId);
+	#End
 
-`Customer.transaction.variables.gx`:
-```
-Today
-Time [ DataType = 'Character(8)' ]
-Pgmname [ DataType = 'Character(128)' ]
-Pgmdesc [ DataType = 'Character(256)' ]
-Mode [ DataType = 'Character(3)' ]
+	#Variables
+		Today
+		Time [ DataType = 'Character(8)' ]
+		Pgmname [ DataType = 'Character(128)' ]
+		Pgmdesc [ DataType = 'Character(256)' ]
+		Mode [ DataType = 'Character(3)' ]
+	#End
+}
 ```
 
 `Customer.transaction.properties.toml`:
