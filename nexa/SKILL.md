@@ -137,6 +137,12 @@ When user requests modeling task:
 		- Use `rootDirectory` with the `output directory` path
 8. Return a brief summary
 
+When `create_or_impact_database` may be involved:
+- This is a DANGEROUS operation that can DELETE ALL DATA in the database
+- NEVER execute this operation unless the user explicitly requests it
+- NEVER suggest this operation unless you are 100% certain the application database does not exist yet
+- Before execution, ALWAYS warn the user that this operation can delete all existing data and ask for explicit confirmation
+
 When user requests technical question:
 1. Identify appropriate resource for object type
 2. Elaborate an answer based on:
@@ -191,6 +197,7 @@ Quick reference for appropriate use of each object type
 ## Procedure (PRC)
 - Purpose: Procedural algorithm as sequence of statements
 - Use when: Writing procedural logic, operating CRUD over data, consuming REST services, etc
+- Execution: When running a main procedure, consult the COMMAND LINE EXECUTION section in the reference for the target environment; do NOT use the MCP `run` tool
 - Reference: [Procedure object](references/object-procedure.md)
 
 ## Structured Data Type (SDT)
@@ -217,6 +224,7 @@ Quick reference for appropriate use of each object type
 ## API
 - Purpose: REST API endpoint definition with HTTP methods
 - Use when: Exposing business logic as RESTful services, integrating with external systems, or enabling third-party integrations
+- Runtime URL construction: See [RUNTIME URL](references/object-api.md#runtime-url) section for how to build invocation URLs
 - Reference: [API object](references/object-api.md)
 
 ## Query
