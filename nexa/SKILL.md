@@ -309,6 +309,11 @@ Quick reference for appropriate use of each object type; stored in `/src` sub di
 - Use when: Calling platform APIs, SDKs, native utilities, or external contracts not implemented as GeneXus objects
 - Reference: [ExternalObject object](references/object-external-object.md)
 
+## Language (LNG)
+- Purpose: Localized text resources and locale configuration per target language
+- Use when: Defining multilingual application texts and runtime language behavior
+- Reference: [Language object](references/object-language.md)
+
 ---
 
 # PROPERTIES KNOWLEDGE
