@@ -40,3 +40,23 @@
 
    - Expandir lista com tabelas específicas de módulos (SIGAFAT, SIGAGPE, etc)
    - Documentar padrões de índices compostos
+
+   ## Plataformas cobertas pela Knowledge Base
+
+   A Knowledge Base do CloudPilot (`DsKnowledgeBase`) agora suporta múltiplas
+   plataformas, administradas via rotina **Admin → Base de Conhecimento**
+   (`/admin/knowledge-base`). Este arquivo documenta apenas o slice `TOTVS`.
+
+   | Platform | Categorias | Status |
+   |---|---|---|
+   | `TOTVS` | CORE, MODULE, INTEGRATION, FLUIG, TEMPLATE | 32 entries ativas |
+   | `SAP` | CORE, MODULE, INTEGRATION | em construção |
+   | `RM` | CORE, MODULE, INTEGRATION | em construção |
+   | `GENEXUS_MAPPING` | STACK_MAPPING, UI_STRATEGY, PATTERN | 3 placeholders (preenchidos via UI após piloto) |
+   | `CUSTOM` | (livre) | entries específicos de cliente |
+
+   Consumidores:
+   - `buildTotvsContext()` — jobs do Dev Studio (platform=TOTVS hardcoded por enquanto)
+   - `@migration-architect` — consulta `GENEXUS_MAPPING` durante Sprint 4 do
+     `PRD-legacy-import-xpz-v1.1`
+   - Admin UI — CRUD multi-plataforma por humanos
