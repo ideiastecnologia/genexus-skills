@@ -1,42 +1,108 @@
-# TOTVS Protheus — External Tables
+# TOTVS Protheus — External Tables (Reference Pointer)
 
-   Tabelas Protheus que aparecem em KBs de clientes IdeiasHub e devem ser
-   tratadas como **External Tables** na migração (não gerar schema novo;
-   manter integração por endpoint existente).
+**Status:** Este arquivo é um ponteiro para a base de conhecimento
+TOTVS completa do CloudPilot, não uma duplicação.
 
-   ## Tabelas principais
+## Fonte autoritativa
 
-   | Tabela | Domínio | Observação |
-   |---|---|---|
-   | SA1010 | Clientes | chave A1_FILIAL + A1_COD + A1_LOJA |
-   | SA2010 | Fornecedores | A2_FILIAL + A2_COD + A2_LOJA |
-   | SA3010 | Vendedores | A3_FILIAL + A3_COD |
-   | SB1010 | Produtos | B1_FILIAL + B1_COD |
-   | SC5010 | Pedidos de venda (cabeçalho) | C5_FILIAL + C5_NUM |
-   | SC6010 | Pedidos de venda (itens) | C6_FILIAL + C6_NUM + C6_ITEM |
-   | SE1010 | Contas a receber | E1_FILIAL + E1_PREFIXO + E1_NUM |
-   | SE2010 | Contas a pagar | E2_FILIAL + E2_PREFIXO + E2_NUM |
-   | SF1010 | Notas fiscais entrada | F1_FILIAL + F1_DOC |
-   | SF2010 | Notas fiscais saída | F2_FILIAL + F2_DOC |
-   | CT2010 | Lançamentos contábeis | CT2_FILIAL + CT2_DATA |
+Base de conhecimento TOTVS mantida no módulo `cloudpilot-devstudio`:
+cloudpilot-devstudio/src/main/resources/knowledge-base/totvs/
+├── core/
+│   ├── advpl-coding-standards.md
+│   ├── advpl-debugging-errors.md
+│   ├── advpl-to-tlpp-migration.md
+│   ├── embedded-sql-patterns.md
+│   └── protheus-rest-api.md
+├── modules/
+│   ├── sigacom.md    (Compras)
+│   ├── sigaest.md    (Estoque)
+│   ├── sigafat.md    (Faturamento)
+│   ├── sigafin.md    (Financeiro)
+│   ├── sigafis.md    (Fiscal)
+│   └── sigagpe.md    (Gestão de Pessoal)
+├── integrations/
+│   ├── cnab-240.md   (Arquivos bancários)
+│   └── sped-fiscal.md
+└── fluig/
+├── fluig-datasets.md
+└── fluig-workflows.md
 
-   ## Padrão de detecção
+## Como os agentes devem consumir
 
-   Tabela Protheus é identificada por:
-   - Nome seguindo padrão `[A-Z]{2}[0-9]{4}` (ex: SA1010, SB1010)
-   - Colunas com prefixo igual às 2 primeiras letras do nome (A1_*, B1_*)
-   - Coluna `*_FILIAL` sempre presente como parte da chave
+O `@migration-architect` deve consultar a base TOTVS diretamente
+quando detectar tabelas Protheus no Semantic Inventory. A estratégia
+de integração (DbStrategy.SAME por default) continua documentada
+abaixo.
 
-   ## Estratégia de migração
+## Detecção de tabelas Protheus no Semantic Inventory
 
-   - **DbStrategy.SAME** (default): app migrado continua lendo/escrevendo
-     via endpoints Protheus existentes; nenhum schema novo
-   - **DbStrategy.NEW**: não recomendado para tabelas Protheus — alto risco
-     de quebrar integrações com outros sistemas ERP
-   - **DbStrategy.HYBRID**: event sourcing para sincronizar — só para
-     sistemas críticos com cutover longo
+Uma tabela é identificada como Protheus quando:
 
-   ## TODO Sprint 4
+- Nome segue padrão `[A-Z]{2}[0-9]{4}` (ex: SA1010, SB1010, CT2010)
+- Colunas têm prefixo igual às 2 primeiras letras do nome (A1_*, B1_*)
+- Coluna `*_FILIAL` sempre presente como parte da chave composta
 
-   - Expandir lista com tabelas específicas de módulos (SIGAFAT, SIGAGPE, etc)
-   - Documentar padrões de índices compostos
+## Estratégia de migração (default)
+
+**DbStrategy.SAME** (recomendado para Protheus):
+- App migrado continua lendo/escrevendo via endpoints Protheus existentes
+- Nenhum schema novo no CloudPilot
+- Preserva integrações com outros sistemas ERP (BI, ETL, conciliação)
+
+**DbStrategy.NEW**: não recomendado para tabelas Protheus — alto risco
+de quebrar integrações downstream.
+
+**DbStrategy.HYBRID**: event sourcing para sincronizar — apenas para
+sistemas críticos com cutover longo (12+ meses).
+
+## Módulos cobertos pela base interna
+
+Os 6 módulos SIGA* com cobertura direta:
+- **SIGAFIN** — Financeiro (contas a pagar/receber, bancos, fluxo de caixa)
+- **SIGAFAT** — Faturamento (pedidos de venda, notas fiscais de saída)
+- **SIGACOM** — Compras (pedidos de compra, recebimento)
+- **SIGAEST** — Estoque (saldos, movimentações, inventário)
+- **SIGAFIS** — Fiscal (escrituração fiscal, SPED, apuração)
+- **SIGAGPE** — Gestão de Pessoal (folha de pagamento)
+
+## Módulos não cobertos ainda
+
+Se um KB usar tabelas de módulos fora dos 6 acima, o `@migration-architect`
+deve:
+1. Marcar como "requer análise manual" no PRD de migração
+2. Não assumir DbStrategy sem validação explícita do arquiteto humano
+3. Registrar a lacuna para futura expansão da base
+
+Módulos comuns ainda sem cobertura:
+- SIGACTB (Contabilidade)
+- SIGAATF (Ativo Fixo)
+- SIGAPCP (Planejamento e Controle de Produção)
+- SIGALOJA (Varejo)
+- SIGATMS (Transporte)
+- SIGAQIE (Qualidade)
+- SIGAMNT (Manutenção de Ativos)
+- SIGACRM (Relacionamento com Clientes)
+
+## Integrações cobertas
+
+- **CNAB 240** (`integrations/cnab-240.md`) — arquivos bancários
+  padronizados FEBRABAN
+- **SPED Fiscal** (`integrations/sped-fiscal.md`) — escrituração
+  fiscal digital
+
+## Fluig (workflow + datasets)
+
+Para KBs que se integram com Fluig BPM:
+- `fluig/fluig-workflows.md` — modelagem de processos
+- `fluig/fluig-datasets.md` — criação de datasets para forms
+
+## Notas de manutenção
+
+Este arquivo é um ponteiro leve. A base real em
+`cloudpilot-devstudio/src/main/resources/knowledge-base/totvs/` é
+mantida pelo time TOTVS da IdeiasHub e deve ser a fonte de verdade
+para todas as regras de negócio Protheus.
+
+Se o `@legacy-analyzer` detectar tabelas Protheus que não batem com
+nenhum módulo documentado, emitir um warning no Semantic Inventory
+sugerindo expansão da base antes de prosseguir.
